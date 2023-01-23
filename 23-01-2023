@@ -1,4 +1,4 @@
-First Unique Character in a String
+1.First Unique Character in a String
 code:
 class Solution {
     public int firstUniqChar(String s) {
@@ -18,5 +18,26 @@ class Solution {
             }
         }
         return -1;
+    }
+}
+
+2.Longest Substring Without Repeating Characters
+code:
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int low=0,high=0,len=0;
+        Map<Character,Integer> map = new HashMap<>();
+        while(high<s.length()){
+            if(map.containsKey(s.charAt(high))){
+                map.remove(s.charAt(low));
+                low++;
+            }
+            else{
+                map.put(s.charAt(high),1);
+                len=Math.max(len,high-low+1);
+                high++;
+            }
+        }
+        return len;
     }
 }
