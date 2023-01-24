@@ -1,0 +1,78 @@
+1.Binary Tree Postorder Traversal
+code:
+class Solution {
+    void Postorder(TreeNode root, List<Integer> list){
+        if(root==null){
+            return;
+        }
+        Postorder(root.left,list);
+        Postorder(root.right,list);
+        list.add(root.val);
+    }
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Postorder(root,list);
+        return list;
+
+    }
+}
+2.Binary Tree Preorder Traversal
+code:
+class Solution {
+    void preorder(TreeNode root, List<Integer>list){
+        if(root==null) return;
+        list.add(root.val);
+        preorder(root.left,list);
+        preorder(root.right,list);
+    }
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        preorder(root,list);
+        return list;
+        
+    }
+}
+3.Binary Tree Inorder Traversal
+code:
+class Solution {
+    void inorder(TreeNode root, List<Integer> list){
+        if(root==null) return;
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root,list);
+        return list;
+    }
+}
+4.Maximum Depth of Binary Tree
+code:
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null) return 0;
+        int l=maxDepth(root.left);
+        int r=maxDepth(root.right);
+        return Math.max(l,r)+1;
+    }
+}
+5.Minimum Depth of Binary Tree
+code:
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null) return 0;
+        int l=minDepth(root.left);
+        int r=minDepth(root.right);
+        if(l==0 && r==0){
+            return 1;
+        }
+        if(l==0){
+            return r+1;
+        }
+        if(r==0){
+            return l+1;
+        }
+        return Math.min(l,r)+1;
+    }
+}
