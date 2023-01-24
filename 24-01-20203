@@ -109,3 +109,20 @@ class Solution {
         return Math.max(l,r)+1;
     }
 }
+8.Search in a Binary Search Tree
+code:
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        if(root==null){
+            return null;
+        }
+        if(root.val>val){
+            root=searchBST(root.left,val);
+        }
+        else if(root.val<val){
+            root=searchBST(root.right,val);
+        }
+        return root;
+
+    }
+}
