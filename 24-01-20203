@@ -76,3 +76,36 @@ class Solution {
         return Math.min(l,r)+1;
     }
 }
+6.Count Complete Tree Nodes
+code:
+class Solution {
+    public int countNodes(TreeNode root) {
+        if(root==null) return 0;
+        int l=countNodes(root.left);
+        int r=countNodes(root.right);
+        return l+r+1;
+    }
+}
+7.Balanced Binary Tree
+code:
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null){
+            return true;
+        }
+        else if(Math.abs(height(root.left)-height(root.right))>1){
+            return false;
+        }
+        else{
+            return isBalanced(root.left) && isBalanced(root.right);
+        }
+    }
+    public static int height(TreeNode root){
+        if(root==null){
+            return 0;
+        }
+        int l=height(root.left);
+        int r=height(root.right);
+        return Math.max(l,r)+1;
+    }
+}
