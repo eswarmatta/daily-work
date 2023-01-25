@@ -119,3 +119,22 @@ class Solution {
 
     }
 }
+7.Binary Tree Right Side View
+code:
+class Solution {
+    void rightSide(TreeNode root,List<Integer> list,int a){
+        if(root==null){
+            return ;
+        }
+        if(a==list.size()){
+            list.add(root.val);
+        }
+        rightSide(root.right,list,a+1);
+        rightSide(root.left,list,a+1);
+    }
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        rightSide(root,list,0);
+        return list;
+    }
+}
