@@ -1,0 +1,73 @@
+Same Tree
+code:
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p==null && q==null){
+            return true;
+        }
+        if(p==null || q==null){
+            return false;
+        }
+        if(p.val!=q.val){
+            return false;
+        }
+        boolean l=isSameTree(p.left,q.left);
+        boolean r=isSameTree(p.right,q.right);
+        return l&&r;
+    }
+}
+2.Symmetric Tree
+code:
+class Solution {
+    boolean isSym(TreeNode root1,TreeNode root2){
+        if(root1==null && root2==null){
+            return true;
+        }
+        if(root1==null || root2==null){
+            return false;
+        }
+        if(root1.val!=root2.val){
+            return false;
+        }
+        boolean l=isSym(root1.left,root2.right);
+        boolean r=isSym(root1.right,root2.left);
+        return l&&r;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        TreeNode root1=root.left;
+        TreeNode root2=root.right;
+        return isSym(root1,root2);
+    }
+}
+3.Path Sum
+code:
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root==null){
+            return false;
+        }
+        if(root.left==null && root.right==null && root.val==targetSum){
+            return true;
+        }
+        targetSum=targetSum-root.val;
+        boolean l=hasPathSum(root.left,targetSum);
+        boolean r=hasPathSum(root.right,targetSum);
+        return l||r;
+    }
+}
+4. Invert Binary Tree
+code:
+class Solution {
+    void swap(TreeNode root){
+        if(root==null) return;
+        swap(root.left);
+        swap(root.right);
+        TreeNode temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+    }
+    public TreeNode invertTree(TreeNode root) {
+        swap(root);
+        return root;
+    }
+}
