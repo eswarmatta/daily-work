@@ -138,3 +138,44 @@ class Solution {
         return list;
     }
 }
+8.Binary Tree Level Order Traversal
+code:
+class Solution {
+    void level(TreeNode root,List<List<Integer>> list,int level){
+        if(root==null) return;
+        if(list.size()==level){
+            list.add(new ArrayList<>());
+        }
+        list.get(level).add(root.val);
+        level(root.left,list,level+1);
+        level(root.right,list,level+1);
+    }
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> list= new ArrayList<>();
+        level(root,list,0);
+        return list;
+    }
+}
+9.Binary Tree Zigzag Level Order Traversal
+code:
+class Solution {
+    public void zigzag(TreeNode root,List<List<Integer>> list,int level){
+        if(root==null) return;
+        if(level==list.size()){
+            list.add(new ArrayList<>());
+        }
+        if(level%2==0){
+            list.get(level).add(root.val);
+        }
+        else{
+            list.get(level).add(0,root.val);
+        }
+        zigzag(root.left,list,level+1);
+        zigzag(root.right,list,level+1);
+    }
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<>();
+        zigzag(root,list,0);
+        return list;
+    }
+}
