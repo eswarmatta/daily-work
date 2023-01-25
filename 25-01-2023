@@ -71,3 +71,51 @@ class Solution {
         return root;
     }
 }
+5.Lowest Common Ancestor of a Binary Tree
+code:
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==null){
+            return null;
+        }
+        if(root==p || root==q){
+            return root;
+        }
+        TreeNode left=lowestCommonAncestor(root.left,p,q);
+        TreeNode right=lowestCommonAncestor(root.right,p,q);
+        if(left!=null && right!=null){
+            return root;
+        }
+        if(left!=null){
+            return left;
+        }
+        if(right!=null){
+            return right;
+        }
+        return null;
+        
+    }
+}
+6.Diameter of Binary Tree
+code:
+class Solution {
+    int height(TreeNode root){
+        if(root==null) return 0;
+        int l = height(root.left);
+        int r= height(root.right);
+        return Math.max(l,r)+1;
+    }
+    int max=0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null) return 0;
+        int left=height(root.left);
+        int right=height(root.right);
+        if(left+right>max){
+            max=left+right;
+        }
+        diameterOfBinaryTree(root.left);
+        diameterOfBinaryTree(root.right);
+        return max;
+
+    }
+}
