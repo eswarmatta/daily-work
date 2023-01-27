@@ -44,3 +44,18 @@ public class Solution {
 		return list;
 	}
 }
+2.Flatten Binary Tree to Linked List
+code:
+class Solution {
+    TreeNode prev=null;
+    public void flatten(TreeNode root) {
+        if(root==null){
+            return;
+        }
+        flatten(root.right);
+        flatten(root.left);
+        root.left=null;
+        root.right=prev;
+        prev=root;
+    }
+}
