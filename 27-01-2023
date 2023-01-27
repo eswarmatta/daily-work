@@ -1,1 +1,46 @@
-
+1.Top View Of Binary Tree
+code:
+class pair{
+	BinaryTreeNode node;
+	int level;
+	public pair(BinaryTreeNode n,int lev){
+		node=n;
+		level=lev;
+	}
+}
+public class Solution {
+	public static ArrayList<Integer> getTopView(BinaryTreeNode root) {
+		ArrayList<Integer> list = new ArrayList<>();
+		TreeMap<Integer,Integer> tree= new TreeMap<>();
+		if(root==null){
+			return list ;
+		}
+		Queue<pair> queue = new LinkedList<>();
+		tree.put(0,root.val);
+		queue.add(new pair(root,0));
+		while(!queue.isEmpty()){
+			int size=queue.size();
+			for(int i=1;i<=size;i++){
+				pair cur= queue.poll();
+				BinaryTreeNode nod= cur.node;
+				int level=cur.level;
+				if(nod.left!=null){
+					if(!tree.containsKey(level-1)){
+						tree.put(level-1,nod.left.val);
+					}
+					queue.add(new pair(nod.left,level-1));
+				}
+				if(nod.right!=null){
+					if(!tree.containsKey(level+1)){
+						tree.put(level+1,nod.right.val);
+					}
+					queue.add(new pair(nod.right,level+1));
+				}
+			}
+		}
+		for(Integer map:tree.values()){
+			list.add(map);
+		}
+		return list;
+	}
+}
