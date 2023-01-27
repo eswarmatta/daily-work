@@ -59,3 +59,51 @@ class Solution {
         prev=root;
     }
 }
+3.Bottom View of Binary Tree
+code:
+class pair{
+    Node node;
+    Integer level;
+    public pair(Node n,Integer l){
+        node=n;
+        level=l;
+    }
+}
+
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        ArrayList<Integer> list = new ArrayList<>();
+        TreeMap<Integer,Integer> tree=new TreeMap<>();
+        if(root==null){
+            return list;
+        }
+        
+        Queue<pair> queue = new LinkedList<>();
+        queue.add(new pair(root,0));
+        tree.put(0,root.data);
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=size;i++){
+                pair cur=queue.poll();
+                Node node=cur.node;
+                int level=cur.level;
+                if(node.left!=null){
+                    tree.put(level-1,node.left.data);
+                    queue.add(new pair(node.left,level-1));
+                }
+                if(node.right!=null){
+                    tree.put(level+1,node.right.data);
+                    queue.add(new pair(node.right,level+1));
+                }
+            }
+        }
+        for(Integer map:tree.values()){
+            list.add(map);
+        }
+        return list;
+        
+    }
+}
