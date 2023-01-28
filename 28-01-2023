@@ -55,4 +55,70 @@ class Solution {
         return res;
     }
 }
-
+4.Delete a node in BST
+code:
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root==null){
+            return root;
+        }
+        TreeNode p=null;
+        TreeNode cur=root;
+        while(cur!=null && cur.val!=key){
+            p=cur;
+            if(key<cur.val){
+                cur=cur.left;
+            }
+            else{
+                cur=cur.right;
+            }
+        }
+        if(cur!=null){
+            if(cur.left==null && cur.right==null && p!=null){
+                if(p.val>cur.val){
+                    p.left=null;
+                }
+                else{
+                    p.right=null;
+                }
+                return root;
+            }
+        if(cur.left!=null && cur.right!=null){
+            TreeNode temp=cur.right;
+            p=cur;
+            while(temp.left!=null){
+                p=temp;
+                temp=temp.left;
+            }
+            cur.val=temp.val;
+            cur=temp;
+        }
+        if(key==root.val){
+            if(root.left!=null){
+            root=root.left;
+            }
+            else{
+               root=root.right;
+            }
+        return root;
+        }
+        if(p.val>cur.val){
+            if(cur.left!=null){
+                p.left=cur.left;
+            }
+            else{
+                p.left=cur.right;
+            }
+        }
+        else{
+            if(cur.left!=null){
+                p.right=cur.left;
+            }
+            else{
+                p.right=cur.right;
+            }
+        }
+        }
+        return root;
+    }
+}
