@@ -1,0 +1,13 @@
+1.Minimum element in BST
+code:
+class Tree {
+    int minValue(Node node) {
+        if(node==null) return -1;
+        if(node.left==null) return node.data;
+        while(node.left!=null){
+            node=node.left;
+        }
+        return node.data;
+    }
+}
+2.
