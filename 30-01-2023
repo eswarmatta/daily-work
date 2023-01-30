@@ -23,3 +23,58 @@ class Solution {
         return list.get(k-1);
     }
 }
+2.ceil in BST
+code:
+class Tree {
+    // Function to return the ceil of given number in BST.
+    int findCeil(Node root, int key) {
+        if (root == null) return -1;
+        List<Integer> list = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=queue.size();i++){
+                Node node= queue.poll();
+                if(node.data>=key) list.add(node.data);
+                if(node.left!=null){
+                    queue.add(node.left);
+                }
+                if(node.right!=null){
+                    queue.add(node.right);
+                }
+            }
+        }
+        Collections.sort(list);
+        if(list.size()==0){
+            return -1;
+        }
+        return list.get(0);
+    }
+}
+3.Floor in BST
+code:
+class Solution {
+    public static int floor(Node root, int x) {
+        if(root==null) return -1;
+        List<Integer> list = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=size;i++){
+                Node cur=queue.poll();
+                if(cur.data<=x) list.add(cur.data);
+                if(cur.left!=null){
+                    queue.add(cur.left);
+                }
+                if(cur.right!=null){
+                    queue.add(cur.right);
+                }
+            }
+        }
+        if(list.size()==0) return -1;
+        Collections.sort(list);
+        return list.get(list.size()-1);
+    }
+}
