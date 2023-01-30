@@ -1,0 +1,25 @@
+1.Kth Smallest Element in a BST
+code:
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> list= new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root==null) return -1;
+        else queue.add(root);
+        while(!queue.isEmpty()){
+            int size=queue.size();
+        for(int i=1;i<=queue.size();i++){
+            TreeNode cur= queue.poll();
+            list.add(cur.val);
+            if(cur.left!=null){
+                queue.add(cur.left);
+            }
+            if(cur.right!=null){
+                queue.add(cur.right);
+            }
+        }
+        }
+        Collections.sort(list);
+        return list.get(k-1);
+    }
+}
