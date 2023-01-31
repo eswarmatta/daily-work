@@ -107,3 +107,59 @@ public class Solution {
 	}
 	return list;
 }
+
+
+
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> predecessorSuccessor(TreeNode<Integer> root, int key) {
+		ArrayList<Integer> list = new ArrayList<>();
+		TreeNode<Integer> pred=root; 
+		TreeNode<Integer> succ=root;
+		int min=Integer.MIN_VALUE;
+		int max=Integer.MIN_VALUE;
+		if(pred==null) list.add(min);
+		while(pred!=null){
+			if(pred.val>=key){
+			    pred=pred.left;
+		    }
+			else{
+				min=pred.val;
+				pred=pred.right;
+			}
+		}
+		list.add(min);
+		if(succ==null) list.add(max);
+		while(succ!=null){
+			if(succ.val<=key){
+				succ=succ.right;
+			}
+			else{
+				max=succ.val;
+				succ=succ.left;
+			}
+		}
+		list.add(max);
+		return list;
+	}
+}
