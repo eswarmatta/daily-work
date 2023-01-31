@@ -1,0 +1,109 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> predecessorSuccessor(TreeNode<Integer> root, int key) {
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add(pred(root,Integer.MIN_VALUE,key));
+		list.add(succ(root,Integer.MAX_VALUE,key));
+		return list;
+	}
+	static int pred( TreeNode<Integer> root,int min,int key){
+		if(root==null) return min;
+		while(root!=null){
+			if(root.val>=key){
+			    root=root.left;
+		    }
+			else{
+				min=root.val;
+				root=root.right;
+			}
+		}
+		return min;
+	}
+	static int succ(TreeNode<Integer> root ,int max,int key){
+		if(root==null) return max;
+		while(root!=null){
+			if(root.val<=key){
+				root=root.right;
+			}
+			else{
+				max=root.val;
+				root=root.left;
+			}
+		}
+		return max;
+	}
+}
+
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> predecessorSuccessor(TreeNode<Integer> root, int key) {
+		static ArrayList<Integer> list = new ArrayList<>();
+		TreeNode pred=root; 
+		TreeNode succ=root;
+		int min=Integer.MIN_VALUE;
+		int max=Integer.MIN_VALUE;
+		if(pred==null) add(0,min);
+		while(pred!=null){
+			if(pred.val>=key){
+			    pred=pred.left;
+		    }
+			else{
+				min=pred.val;
+				pred=pred.right;
+			}
+		}
+		add(0,min);
+		if(succ==null) add(1,max);
+		while(succ!=null){
+			if(succ.val<=key){
+				succ=succ.right;
+			}
+			else{
+				max=succ.val;
+				succ=succ.left;
+			}
+		}
+		add(1,max);
+	}
+	return list;
+}
