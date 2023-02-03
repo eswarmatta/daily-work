@@ -1,1 +1,35 @@
+convert sorted array into bst
+class Solution {
+    public  TreeNode construct(int [] nums,int low,int high){
+        if(low>high) return null;
+        TreeNode node=new TreeNode(nums[(low+high)/2]);
+        node.left=construct(nums,low,(low+high)/2-1);
+        node.right=construct(nums,(low+high)/2+1,high);
+        return node;
 
+    }
+    public TreeNode sortedArrayToBST(int[] nums) {
+        TreeNode node=construct(nums,0,nums.length-1);
+        return node;
+        
+    }
+}
+
+count good nodes
+class Solution {
+    int count=0;
+    public void path(TreeNode root,int max){
+        if(root==null) return;
+        max=Math.max(max,root.val);
+        if(root.val>=max) count++;
+        path(root.left,max);
+        path(root.right,max);
+    }
+    public int goodNodes(TreeNode root) {
+        if(root==null) return count;
+        path(root,Integer.MIN_VALUE);
+        return count;
+
+        
+    }
+}
