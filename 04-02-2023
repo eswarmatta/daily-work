@@ -66,3 +66,20 @@ class Solution {
         return list;
     }
 }
+4.Convert BST to Greater Tree
+code:
+class Solution {
+    int sum=0;
+    public TreeNode convertBST(TreeNode root) {
+        revin(root);
+        return root;
+    }
+    void revin(TreeNode root){
+        if(root==null) return;
+        revin (root.right);
+        root.val=root.val+sum;
+        sum=root.val;
+        revin(root.left);
+        return ;
+    }
+}
