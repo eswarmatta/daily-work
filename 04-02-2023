@@ -83,3 +83,21 @@ class Solution {
         return ;
     }
 }
+5.Range Sum of BST
+code:
+class Solution {
+    int sum=0;
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        post(root,low,high);
+        return sum;
+    }
+    void post(TreeNode root,int low,int high){
+        if(root==null) return;
+        if(root.val<=high && root.val>=low){
+            sum+=root.val;
+        }
+        post(root.left,low,high);
+        post(root.right,low,high);
+        return;
+    }
+}
