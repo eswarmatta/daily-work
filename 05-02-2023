@@ -1,0 +1,92 @@
+Snake and ladder game
+code:
+import java.util.*;
+class snld {
+    static int player1 = 0;
+    static int player2 = 0;
+    static int player3 = 0;
+    static int player4 = 0;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str;
+        HashMap<Integer, Integer> s = new HashMap<>();
+        HashMap<Integer, Integer> l = new HashMap<>();
+        s.put(26, 14);
+        s.put(56, 36);
+        s.put(98, 21);
+        s.put(67, 53);
+        s.put(82, 39);
+        s.put(48, 18);
+        l.put(16, 34);
+        l.put(29, 86);
+        l.put(51, 87);
+        l.put(36, 69);
+        l.put(77, 94);
+        l.put(66, 89);
+            int curplayer = 1;
+        int roll;
+        int WIN = 100;
+        System.out.println("Enter 'R' to roll the dice! ");
+        do {
+            str = sc.next();
+            if (curplayer % 4 == 1) {
+                System.out.println("Player1's turn.Rolling the dice");
+                roll = rollDice();
+                System.out.println(roll);
+                player1 = position(player1, roll, WIN, s, l);
+                System.out.println("Player1's position is " + player1);
+                if (player1 == WIN) {
+                    System.out.println("Won the game!!");
+                }
+            } else if (curplayer % 4 == 2) {
+                System.out.println("player2's turn.Rolling the dice");
+                roll = rollDice();
+                System.out.println(roll);
+                player2 = position(player2, roll, WIN, s, l);
+                System.out.println("Player2's positoin is " + player2);
+                if (player2 == WIN) {
+                    System.out.println("Won the game!!");
+                }
+            } else if (curplayer % 4 == 3) {
+                System.out.println("player3's turn.Rolling the dice");
+                roll = rollDice();
+                System.out.println(roll);
+                player3 = position(player3, roll, WIN, s, l);
+                System.out.println("Player3's positoin is " + player3);
+                if (player3 == WIN) {
+                    System.out.println("Won the game!!");
+                }
+            } else {
+                System.out.println("player4's turn.Rolling the dice");
+                roll = rollDice();
+                System.out.println(roll);
+                player4 = position(player4, roll, WIN, s, l);
+                System.out.println("Player4's positoin is " + player4);
+                if (player4 == WIN) {
+                    System.out.println("Won the game!!");
+                }
+            }
+                curplayer += 1;
+        } while (str.equals("R") && (player1 != 100 || player2 != 100 || player3 != 100 || player4 != 100));
+    }
+
+    public static int rollDice() {
+        Random random = new Random();
+        int rand;
+        return rand = random.nextInt(6) + 1;
+    }
+
+    public static int position(int pos, int roll, int WIN, HashMap<Integer, Integer> s, HashMap<Integer, Integer> l) {
+        pos = pos + roll;
+        if (pos > WIN) {
+            pos = pos - roll;
+        }
+        if (s.containsKey(pos)) {
+            pos = s.get(pos);
+        }
+        if (l.containsKey(pos)) {
+            pos = l.get(pos);
+        }
+        return pos;
+    }
+}
