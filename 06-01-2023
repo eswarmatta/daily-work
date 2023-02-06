@@ -1,0 +1,60 @@
+1.Rotting Oranges
+code:
+class Solution {
+    class pair{
+        int row,col;
+        pair(int row,int col){
+            this.row=row;
+            this.col=col;
+        }
+    }
+    public int orangesRotting(int[][] grid) {
+        int rows=grid.length;
+        int cols=grid[0].length;
+        Queue<pair> queue = new LinkedList<>();
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j]==2){
+                    queue.add(new pair(i,j));
+                }
+            }            
+        }
+        int time;
+        if(queue.size()>0){
+            time=-1;
+        }
+        else{
+            time= 0;
+        }
+        int[] offsetx={-1,1,0,0};
+        int[] offsety={0,0,1,-1};
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=size;i++){
+            pair cur= queue.poll();
+            int r=cur.row;
+            int c=cur.col;
+            for(int k=0;k<4;k++){
+                int nextr=r+offsetx[k];
+                int nextc=c+offsety[k];
+                if(nextr<0 || nextr>=rows || nextc<0 || nextc>=cols){
+                    continue;
+                }
+                if(grid[nextr][nextc]==1){
+                    queue.add(new pair(nextr,nextc));
+                    grid[nextr][nextc]=2;
+                }
+            }
+            }
+            time++;
+        }
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j]==1){
+                    return -1;
+                }
+            }            
+        }
+        return time;
+    }
+}
