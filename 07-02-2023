@@ -1,0 +1,105 @@
+1.Number of Islands
+code:
+class Solution {
+    int rows;
+    int cols;
+    public int numIslands(char[][] grid) {
+        rows=grid.length;
+        cols=grid[0].length;
+        int count=0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j]=='1'){
+                    dfs(i,j,grid);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    void dfs(int i,int j,char[][] grid){
+        grid[i][j]='0';
+        int[] offsetx={-1,1,0,0};
+        int[] offsety={0,0,1,-1};
+        for(int k=0;k<4;k++){
+            int r=i+offsetx[k];
+            int c=j+offsety[k];
+            if(r<0 || r>=rows ||c<0 || c>=cols){
+                continue;
+            }
+            if(grid[r][c]=='1'){
+                dfs(r,c,grid);
+            }
+        }
+        return;
+    }
+}
+2.Keys and Rooms
+code:
+class Solution {
+    void add(int r,int c,Queue<Integer> queue,List<List<Integer>> rooms){
+        for(int i=0;i<c;i++){
+            queue.add(rooms.get(r).get(i));
+        }
+    }
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        int rows=rooms.size();
+        int cols=rooms.get(0).size();
+        boolean[] visited = new boolean[rooms.size()];
+        Queue<Integer> queue = new LinkedList<>();
+        visited[0]=true;
+        for(int i=0;i<cols;i++){
+                queue.add(rooms.get(0).get(i));
+        }
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=size;i++){
+                int cur=queue.poll();
+                if(!visited[cur]){
+                    visited[cur]=true;
+                    add(cur,rooms.get(cur).size(),queue,rooms);
+                } 
+            } 
+        }
+        for(int i=0;i<rooms.size();i++){
+            if(visited[i]==false){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+3.Detect Cycles in 2D Grid
+code:
+class Solution {
+    int row,col;
+    boolean res=false;
+    public boolean containsCycle(char[][] grid) {
+        row=grid.length;
+        col=grid[0].length;
+        boolean[][] visited=new  boolean[row][col];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+               if(visited[i][j]) continue;
+                dfs(i,j,grid,visited,10,10);
+            }
+        }
+        return res;
+    }
+    void dfs(int i,int j,char[][] grid,boolean[][] visited,int pr, int pc){
+        visited[i][j]=true;
+        int[] ox={-1,0,1,0};
+        int[] oy={0,1,0,-1};
+        for(int k=0;k<4;k++){
+            int r=i+ox[k];
+            int c=j+oy[k];
+            if(r<0||r>=row||c<0||c>=col) continue;
+            if((visited[r][c])&&(grid[i][j]==grid[r][c])&&(r!=pr && c!=pc)) res=true;
+            if(!visited[r][c]&&grid[i][j]==grid[r][c]){
+                dfs(r,c,grid,visited,i,j);
+            }
+                 
+        }
+        return;
+    }
+}
