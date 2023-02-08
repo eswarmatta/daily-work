@@ -1,0 +1,171 @@
+1. Course Schedule
+code:
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adj= new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<prerequisites.length;i++){
+            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+        }
+        int [] in= new int[numCourses];
+        for(int i=0;i<adj.size();i++){
+            int cols=adj.get(i).size();
+            for(int j=0;j<cols;j++){
+                in[adj.get(i).get(j)]++;
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i=0;i<in.length;i++){
+            if(in[i]==0){
+                queue.add(i);
+            }
+        }
+        int s=0;
+        while(!queue.isEmpty()){
+        int size=queue.size();
+        s+=size;
+        for(int j=0;j<size;j++){
+        int cur=queue.poll();
+        for(int i=0;i<adj.get(cur).size();i++){
+            in[adj.get(cur).get(i)]--;
+            if(in[adj.get(cur).get(i)]==0){
+                queue.add(adj.get(cur).get(i));
+            }
+        }
+        }
+        }
+        if(s==numCourses){
+            return true;
+        }
+        return false;
+    }
+}
+2. Course Schedule II
+code:
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<prerequisites.length;i++){
+            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+        }
+        int[] in = new int[numCourses];
+        for(int i=0;i<adj.size();i++){
+            int cols=adj.get(i).size();
+            for(int j=0;j<cols;j++){
+                in[adj.get(i).get(j)]++;
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i=0;i<numCourses;i++){
+            if(in[i]==0){
+                queue.add(i);
+            }
+        }
+        int k=0;
+        int [] res = new int[numCourses];
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=0;i<size;i++){
+                int cur=queue.poll();
+                res[k]=cur;
+                if(k<numCourses) k++;
+                for(int j=0;j<adj.get(cur).size();j++){
+                    in[adj.get(cur).get(j)]--;
+                    if(in[adj.get(cur).get(j)]==0){
+                        queue.add(adj.get(cur).get(j));
+                    }
+                }
+            }
+        }
+        int count=0;
+        for(int i=0;i<res.length;i++){
+            if(res[i]==0) count++;
+        }
+        if(count>1){
+            int[] r= new int[0];
+            return r;
+        }
+        return res;
+    }
+}
+3.Swim in Rising Water
+code:
+class Solution {
+    class pair implements Comparable<pair> {
+        int dis,di,dj;
+        pair(int dis,int di,int dj){
+            this.dis=dis;
+            this.di=di;
+            this.dj=dj;
+        }
+        public int compareTo(pair a){
+            return dis-a.dis;
+        }
+    }
+    public int swimInWater(int[][] grid) {
+        int max=0;
+        int r=grid.length;
+        int c=grid[0].length;
+        int[] x={0,0,1,-1};
+        int[] y={1,-1,0,0};
+        PriorityQueue<pair> q = new PriorityQueue<>();
+        boolean [] visited= new boolean[r*c];
+        q.add(new pair(grid[0][0],0,0));
+        while(!q.isEmpty()){
+            pair cur=q.poll();
+            if(visited[cur.dis]==false) visited[cur.dis]=true;
+            max=Math.max(cur.dis,max);
+            if(cur.di==r-1 && cur.dj==c-1) return max;
+            for(int i=0;i<4;i++){
+                int row=cur.di+x[i];
+                int col=cur.dj+y[i];
+                if(row<0 || row>=r || col<0 || col>=c) continue;
+                if(visited[grid[row][col]]!=true){
+                    q.add(new pair(grid[row][col],row,col));
+                }
+            }
+        }
+        return max;
+    }
+    
+}
+4.Keys and Rooms
+code:
+class Solution {
+    void add(int r,int c,Queue<Integer> queue,List<List<Integer>> rooms){
+        for(int i=0;i<c;i++){
+            queue.add(rooms.get(r).get(i));
+        }
+    }
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        int rows=rooms.size();
+        int cols=rooms.get(0).size();
+        boolean[] visited = new boolean[rooms.size()];
+        Queue<Integer> queue = new LinkedList<>();
+        visited[0]=true;
+        for(int i=0;i<cols;i++){
+                queue.add(rooms.get(0).get(i));
+        }
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            for(int i=1;i<=size;i++){
+                int cur=queue.poll();
+                if(!visited[cur]){
+                    visited[cur]=true;
+                    add(cur,rooms.get(cur).size(),queue,rooms);
+                } 
+            } 
+        }
+        for(int i=0;i<rooms.size();i++){
+            if(visited[i]==false){
+                return false;
+            }
+        }
+        return true;
+    }
+}
