@@ -1,0 +1,54 @@
+Minimum Spanning Tree(Kruskal's)
+code:
+class Solution{
+    static int find(int[] parent,int p){
+	        if(parent[p]==p) return p;
+	        parent[p]=find(parent,parent[p]);
+	        return parent[p];
+	    }
+	    static boolean union(int[] parent,int u,int v){
+	        int x=find(parent,u);
+	        int y=find(parent,v);
+	        if(x!=y){
+	            parent[x]=y;
+	            return true;
+	        }
+	        return false;
+	    }
+	static int spanningTree(int V, int E, int edges[][]){
+	    class pair implements Comparable<pair>{
+	        int s;
+	        int e;
+	        int wt;
+	        pair(int s,int e,int wt){
+	            this.s=s;
+	            this.e=e;
+	            this.wt=wt;
+	        }
+	        public int compareTo(pair a){
+	            return wt-a.wt;
+	        }
+	    }
+	    PriorityQueue<pair> queue = new PriorityQueue<>();
+	    int[] parent= new int[V];
+	    for(int i=0;i<V;i++){
+	        parent[i]=i;
+	    }
+	    for(int i=0;i<edges.length;i++){
+	        queue.add(new pair(edges[i][0],edges[i][1],edges[i][2]));
+	    }
+	    int n=0;
+	    int cost=0;
+	    while(!queue.isEmpty() && n<V){
+	        pair cur = queue.poll();
+	        int sv=cur.s;
+	        int ev=cur.e;
+	        int weight=cur.wt;
+	        if(union(parent,sv,ev)){
+	            n++;
+	            cost+=weight;
+	        }
+	    }
+	    return cost;
+	}
+}
